@@ -176,7 +176,8 @@ button {
   gap: 16px;
 }
 
-.ops-grid.secondary {
+.ops-grid.secondary,
+.secondary-callout {
   margin-top: 16px;
 }
 
@@ -214,7 +215,8 @@ button {
 .heatmap-card,
 .event-card,
 .recommendation-card,
-.portal-milestone {
+.portal-milestone,
+.copilot-answer {
   display: grid;
   gap: 4px;
   padding: 14px 16px;
@@ -232,7 +234,8 @@ button {
 .map-details strong,
 .portal-action strong,
 .portal-hero strong,
-.portal-milestone strong {
+.portal-milestone strong,
+.copilot-answer strong {
   font-size: 1rem;
 }
 
@@ -246,7 +249,8 @@ button {
 .map-details span,
 .portal-action span,
 .portal-hero span,
-.portal-milestone span {
+.portal-milestone span,
+.copilot-answer span {
   color: #526374;
   line-height: 1.5;
 }
@@ -349,7 +353,8 @@ button {
 .timeline-grid,
 .portal-milestones,
 .portal-feed,
-.portal-actions {
+.portal-actions,
+.copilot-stack {
   display: grid;
   gap: 12px;
 }

@@ -3,6 +3,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { notFound, readJson, sendJson } from "../lib/http.js";
 import { buildDashboardSnapshot, buildExceptionCenter, buildPublicWorkflowCatalog, buildShipmentBoard, buildShipmentDetail } from "../services/controlTower.js";
 import { listAuditEntries, recordAutomatedRecommendation, appendAuditEntry } from "../services/audit.js";
+import { answerCopilotPrompt } from "../services/copilot.js";
 import { dispatchNotifications } from "../services/notifications.js";
 import { getShipmentById, getShipmentByReference, upsertShipmentEvent } from "../services/repository.js";
 
@@ -142,6 +143,29 @@ export async function routeRequest(request: IncomingMessage, response: ServerRes
       auditEntry,
       notifications
     });
+    return;
+  }
+
+  if (request.method === "POST" && pathname === "/api/copilot/query") {
+    const payload = await readJson<{
+      prompt: string;
+      shipmentId?: string;
+    }>(request);
+
+    if (!payload?.prompt) {
+      sendJson(response, 400, { error: "Prompt is required" });
+      return;
+    }
+
+    appendAuditEntry({
+      shipmentId: payload.shipmentId,
+      actor: "mcp-copilot",
+      action: "copilot_prompt_received",
+      channel: "workflow",
+      detail: payload.prompt
+    });
+
+    sendJson(response, 200, answerCopilotPrompt(payload.prompt, payload.shipmentId));
     return;
   }
 

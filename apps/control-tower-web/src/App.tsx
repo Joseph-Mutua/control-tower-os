@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AppHeader } from "./components/AppHeader";
 import { ExceptionHeatmap } from "./components/ExceptionHeatmap";
 import { MetricCard } from "./components/MetricCard";
+import { OpsCopilot } from "./components/OpsCopilot";
 import { Panel } from "./components/Panel";
 import { PartnerPortalView } from "./components/PartnerPortalView";
 import { RecommendationPanel } from "./components/RecommendationPanel";
@@ -73,6 +74,9 @@ export function App() {
             <section className="ops-grid secondary">
               <SlaDashboard widgets={controlTowerSeed.slaWidgets} />
               <RecommendationPanel shipment={selectedShipment} />
+              <OpsCopilot shipment={selectedShipment} shipments={controlTowerSeed.shipments} />
+            </section>
+            <section className="three-up secondary-callout">
               <Panel title="Action Themes" eyebrow="Recommended automation">
                 <ul className="signal-list compact">
                   <li>
