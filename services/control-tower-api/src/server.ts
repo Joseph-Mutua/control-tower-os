@@ -1,14 +1,16 @@
 import { createServer } from "node:http";
+import { routeRequest } from "./routes/router.js";
 
-const server = createServer((_request, response) => {
-  response.writeHead(200, { "content-type": "application/json" });
-  response.end(
-    JSON.stringify({
-      service: "cxtms-control-tower-api",
-      status: "booting",
-      message: "Control tower API scaffold is in place."
-    }),
-  );
+const server = createServer((request, response) => {
+  routeRequest(request, response).catch((error: Error) => {
+    response.writeHead(500, { "content-type": "application/json" });
+    response.end(
+      JSON.stringify({
+        error: "Unhandled server error",
+        detail: error.message
+      }),
+    );
+  });
 });
 
 const port = Number(process.env.PORT ?? 4010);
