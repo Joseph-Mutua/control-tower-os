@@ -1,0 +1,45 @@
+module:
+  key: control-tower-partner-portal
+  name: Partner Visibility Portal
+  description: Branded portal for customers and operating partners.
+metadata:
+  icon: globe
+  category: portal
+routes:
+  - path: /portal/shipments
+    component: PartnerShipmentList
+    permissions:
+      - customer
+      - partner
+  - path: /portal/shipments/:reference
+    component: PartnerShipmentDetail
+    permissions:
+      - customer
+      - partner
+components:
+  - id: partner-tracking-card
+    type: detail-card
+    dataSource:
+      graphql:
+        query: partnerShipmentDetail
+  - id: portal-actions
+    type: action-list
+    actions:
+      - triggerWorkflow: partnerReportIssue
+      - triggerWorkflow: partnerRequestUpdate
+      - graphqlMutation: uploadShipmentAttachment
+permissions:
+  routes:
+    /portal/shipments:
+      roles:
+        - customer
+        - partner
+  actions:
+    partnerReportIssue:
+      roles:
+        - customer
+        - partner
+    uploadShipmentAttachment:
+      roles:
+        - customer
+        - partner

@@ -1,0 +1,113 @@
+scalar DateTime
+scalar JSON
+
+type Query {
+  shipmentBoard(mode: String, search: String, riskAbove: Int): [ShipmentBoardRow!]!
+  shipmentDetail(id: ID!): ShipmentDetail!
+  exceptionCenter(status: String): [ExceptionAlert!]!
+  partnerShipmentDetail(reference: String!): PartnerShipment!
+  actionQueue(windowHours: Int = 24): [Recommendation!]!
+}
+
+type Mutation {
+  rerunEtaPrediction(shipmentId: ID!): PredictionResult!
+  autoMitigateShipmentRisk(shipmentId: ID!, recommendationId: ID!): ActionExecution!
+  uploadShipmentAttachment(shipmentId: ID!, name: String!, fileKey: String!): Attachment!
+}
+
+type ShipmentBoardRow {
+  id: ID!
+  reference: String!
+  mode: String!
+  customer: String!
+  origin: String!
+  destination: String!
+  carrier: String!
+  status: String!
+  eta: DateTime!
+  predictedEta: DateTime!
+  riskScore: Int!
+  delayHours: Float!
+  slaState: String!
+}
+
+type ShipmentDetail {
+  id: ID!
+  reference: String!
+  milestones: [Milestone!]!
+  events(filter: String, sort: String): [ShipmentEvent!]!
+  exceptions: [ExceptionAlert!]!
+  attachments: [Attachment!]!
+  recommendations: [Recommendation!]!
+}
+
+type ShipmentEvent {
+  id: ID!
+  code: String!
+  source: String!
+  description: String!
+  occurredAt: DateTime!
+  location: String!
+  severity: Int!
+  metadata: JSON
+}
+
+type ExceptionAlert {
+  id: ID!
+  code: String!
+  title: String!
+  summary: String!
+  severity: Int!
+  owner: String!
+  detectedAt: DateTime!
+  status: String!
+}
+
+type Milestone {
+  code: String!
+  label: String!
+  plannedAt: DateTime!
+  actualAt: DateTime
+  location: String!
+  status: String!
+}
+
+type Recommendation {
+  id: ID!
+  title: String!
+  action: String!
+  reason: String!
+  confidence: Float!
+  automationEligible: Boolean!
+}
+
+type PredictionResult {
+  shipmentId: ID!
+  predictedEta: DateTime!
+  etaConfidence: Float!
+  delayProbability: Float!
+  exceptionProbability: Float!
+}
+
+type ActionExecution {
+  success: Boolean!
+  shipmentId: ID!
+  auditId: ID
+}
+
+type Attachment {
+  id: ID!
+  name: String!
+  type: String!
+  uploadedAt: DateTime!
+}
+
+type PartnerShipment {
+  reference: String!
+  customer: String!
+  partner: String!
+  status: String!
+  eta: DateTime!
+  milestones: [Milestone!]!
+  exceptions: [ExceptionAlert!]!
+}

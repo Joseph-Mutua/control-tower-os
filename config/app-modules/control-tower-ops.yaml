@@ -1,0 +1,44 @@
+module:
+  key: control-tower-ops
+  name: Control Tower Ops Dashboard
+  description: Exception-first operating module for internal teams.
+metadata:
+  icon: radar
+  category: operations
+routes:
+  - path: /ops/control-tower
+    component: ControlTowerHome
+    permissions:
+      - ops_admin
+      - ops_analyst
+components:
+  - id: shipment-board
+    type: data-grid
+    dataSource:
+      graphql:
+        query: shipmentBoard
+    permissions:
+      - ops_admin
+      - ops_analyst
+  - id: exception-center
+    type: heatmap
+    dataSource:
+      graphql:
+        query: exceptionCenter
+    permissions:
+      - ops_admin
+      - ops_analyst
+  - id: command-center
+    type: action-panel
+    actions:
+      - triggerWorkflow: autoMitigateShipmentRisk
+      - graphqlMutation: rerunEtaPrediction
+permissions:
+  actions:
+    rerunEtaPrediction:
+      roles:
+        - ops_admin
+        - ops_analyst
+    autoMitigateShipmentRisk:
+      roles:
+        - ops_admin

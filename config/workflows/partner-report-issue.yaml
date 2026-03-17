@@ -1,0 +1,19 @@
+workflow:
+  key: partner-report-issue
+  type: public-api
+  path: /public/issues
+  method: POST
+  authMode: oauth2
+  rateLimitPerMinute: 20
+  openApi:
+    summary: Submit an issue from the partner portal and trigger orchestration notifications.
+  execution:
+    type: sync
+    source: portalIssueIntakeWorkflow
+  audit:
+    enabled: true
+    sink: s3://cxtms-audit/control-tower/
+  notifications:
+    slack: true
+    teams: true
+    email: true

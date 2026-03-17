@@ -1,0 +1,20 @@
+workflow:
+  key: partner-track-shipment
+  type: public-api
+  path: /public/shipments/:reference
+  method: GET
+  authMode: oauth2
+  rateLimitPerMinute: 60
+  openApi:
+    summary: Track shipment status and milestones by public reference.
+  execution:
+    type: sync
+    source: shipmentTrackingResolver
+  response:
+    format: json
+    fields:
+      - reference
+      - status
+      - eta
+      - milestones
+      - exceptions
