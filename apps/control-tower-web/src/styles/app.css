@@ -169,7 +169,8 @@ button {
 }
 
 .ops-grid,
-.three-up {
+.three-up,
+.portal-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
@@ -212,7 +213,8 @@ button {
 .sla-card,
 .heatmap-card,
 .event-card,
-.recommendation-card {
+.recommendation-card,
+.portal-milestone {
   display: grid;
   gap: 4px;
   padding: 14px 16px;
@@ -227,7 +229,10 @@ button {
 .timeline-card strong,
 .event-card strong,
 .recommendation-card strong,
-.map-details strong {
+.map-details strong,
+.portal-action strong,
+.portal-hero strong,
+.portal-milestone strong {
   font-size: 1rem;
 }
 
@@ -238,12 +243,16 @@ button {
 .timeline-card small,
 .event-card span,
 .recommendation-card span,
-.map-details span {
+.map-details span,
+.portal-action span,
+.portal-hero span,
+.portal-milestone span {
   color: #526374;
   line-height: 1.5;
 }
 
-.board-head {
+.board-head,
+.portal-head {
   display: flex;
   justify-content: space-between;
   gap: 16px;
@@ -337,7 +346,10 @@ button {
 .sla-grid,
 .recommendation-stack,
 .event-feed,
-.timeline-grid {
+.timeline-grid,
+.portal-milestones,
+.portal-feed,
+.portal-actions {
   display: grid;
   gap: 12px;
 }
@@ -435,11 +447,47 @@ button {
   flex-wrap: wrap;
 }
 
+.portal-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #143042 0%, #0f5d76 100%);
+  color: white;
+}
+
+.portal-hero span,
+.portal-hero strong {
+  color: white;
+}
+
+.portal-action {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  border: 1px solid rgba(20, 32, 43, 0.08);
+  border-radius: 18px;
+  padding: 14px 16px;
+  text-align: left;
+  background: #f7fafc;
+}
+
+.portal-action.enabled {
+  border-color: rgba(15, 93, 118, 0.24);
+}
+
+.portal-action.disabled {
+  opacity: 0.54;
+}
+
 @media (max-width: 1180px) {
   .metric-grid,
   .ops-grid,
   .three-up,
-  .hero-band {
+  .hero-band,
+  .portal-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -456,7 +504,8 @@ button {
   }
 
   .timeline-card,
-  .heatmap-card {
+  .heatmap-card,
+  .portal-hero {
     grid-template-columns: 1fr;
   }
 }
@@ -470,19 +519,22 @@ button {
   .metric-grid,
   .ops-grid,
   .three-up,
-  .hero-band {
+  .hero-band,
+  .portal-grid {
     grid-template-columns: 1fr;
     display: grid;
   }
 
-  .board-head {
+  .board-head,
+  .portal-head {
     display: grid;
     align-items: start;
   }
 
   .board-row,
   .heatmap-card,
-  .timeline-card {
+  .timeline-card,
+  .portal-hero {
     grid-template-columns: 1fr;
   }
 

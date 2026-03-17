@@ -1,8 +1,10 @@
+import type { UserRole } from "@cxtms/shared";
 import { useState } from "react";
 import { AppHeader } from "./components/AppHeader";
 import { ExceptionHeatmap } from "./components/ExceptionHeatmap";
 import { MetricCard } from "./components/MetricCard";
 import { Panel } from "./components/Panel";
+import { PartnerPortalView } from "./components/PartnerPortalView";
 import { RecommendationPanel } from "./components/RecommendationPanel";
 import { ShipmentBoard } from "./components/ShipmentBoard";
 import { ShipmentTimeline } from "./components/ShipmentTimeline";
@@ -14,6 +16,7 @@ export function App() {
   const [activeView, setActiveView] = useState<"ops" | "partner">("ops");
   const [selectedMode, setSelectedMode] = useState<"all" | "ocean" | "air" | "trucking" | "parcel">("all");
   const [selectedShipmentId, setSelectedShipmentId] = useState("shp-1001");
+  const [portalRole, setPortalRole] = useState<UserRole>("customer");
 
   const filteredShipments =
     selectedMode === "all"
@@ -22,6 +25,7 @@ export function App() {
 
   const selectedShipment =
     filteredShipments.find((shipment) => shipment.id === selectedShipmentId) ?? filteredShipments[0] ?? controlTowerSeed.shipments[0];
+  const portalShipment = controlTowerSeed.shipments[0];
 
   return (
     <main className="app-shell">
@@ -88,37 +92,13 @@ export function App() {
             </section>
           </>
         ) : (
-          <section className="three-up">
-            <Panel title="Portal Summary" eyebrow="Experience">
-              <ul className="signal-list">
-                <li>Shipment tracking by customer-safe reference</li>
-                <li>Exception updates with narrow ETA windows</li>
-                <li>Issue reporting and document upload actions</li>
-              </ul>
-            </Panel>
-            <Panel title="Self-Service Actions" eyebrow="Permissions">
-              <ul className="signal-list compact">
-                {controlTowerSeed.portalActions.map((action) => (
-                  <li key={action.id}>
-                    <strong>{action.label}</strong>
-                    <span>{action.description}</span>
-                  </li>
-                ))}
-              </ul>
-            </Panel>
-            <Panel title="Role Matrix" eyebrow="Access control">
-              <ul className="signal-list compact">
-                {controlTowerSeed.rolePermissions.map((permission) => (
-                  <li key={permission.role}>
-                    <strong>{permission.role}</strong>
-                    <span>
-                      Workflow actions: {permission.canTriggerWorkflows ? "enabled" : "restricted"}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Panel>
-          </section>
+          <PartnerPortalView
+            shipment={portalShipment}
+            portalRole={portalRole}
+            roles={controlTowerSeed.rolePermissions}
+            actions={controlTowerSeed.portalActions}
+            onRoleChange={setPortalRole}
+          />
         )}
       </div>
     </main>
