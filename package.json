@@ -1,0 +1,18 @@
+{
+  "name": "cxtms-control-tower-os",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Predictive logistics control tower and partner portal demo built for CXTMS.",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "shared"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace apps/control-tower-web run dev",
+    "dev:api": "npm --workspace services/control-tower-api run dev",
+    "build": "npm run build --workspaces",
+    "typecheck": "npm run typecheck --workspaces"
+  }
+}
+
