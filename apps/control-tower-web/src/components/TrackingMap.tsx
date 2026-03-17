@@ -19,7 +19,9 @@ export function TrackingMap({ shipment }: TrackingMapProps) {
           />
         </div>
         <div className="map-details">
-          <strong>{shipment.origin} -> {shipment.destination}</strong>
+          <strong>
+            {shipment.origin} {"->"} {shipment.destination}
+          </strong>
           <span>{shipment.carrier}</span>
           <span>Predicted ETA: {new Date(shipment.predictedEta).toLocaleString()}</span>
           <span>Current coordinates: {shipment.mapPosition.lat.toFixed(2)}, {shipment.mapPosition.lng.toFixed(2)}</span>

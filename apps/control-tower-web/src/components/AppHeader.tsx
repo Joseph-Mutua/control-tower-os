@@ -8,7 +8,7 @@ export function AppHeader({ activeView, onViewChange }: AppHeaderProps) {
     <header className="app-header">
       <div>
         <p className="eyebrow">CXTMS Control Tower OS</p>
-        <h1>Predictive visibility, exception orchestration, and self-service.</h1>
+        <h1>Predict. Orchestrate. Deliver.</h1>
       </div>
       <div className="header-actions">
         <button

@@ -7,7 +7,7 @@ import type {
   RolePermission,
   ShipmentDetail,
   SlaWidget
-} from "./types";
+} from "./types.js";
 
 export const rolePermissions: RolePermission[] = [
   {

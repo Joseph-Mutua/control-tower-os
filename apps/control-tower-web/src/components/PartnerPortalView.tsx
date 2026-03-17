@@ -44,7 +44,9 @@ export function PartnerPortalView({
         <div className="portal-hero">
           <div>
             <strong>{shipment.customer}</strong>
-            <span>{shipment.origin} -> {shipment.destination}</span>
+            <span>
+              {shipment.origin} {"->"} {shipment.destination}
+            </span>
             <span>Updated ETA {new Date(shipment.predictedEta).toLocaleString()}</span>
           </div>
           <div>

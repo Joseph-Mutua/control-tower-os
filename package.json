@@ -11,8 +11,8 @@
   "scripts": {
     "dev:web": "npm --workspace apps/control-tower-web run dev",
     "dev:api": "npm --workspace services/control-tower-api run dev",
-    "build": "npm run build --workspaces",
-    "typecheck": "npm run typecheck --workspaces"
-  }
+    "build": "npm --workspace shared run build && npm --workspace apps/control-tower-web run build && npm --workspace services/control-tower-api run build",
+    "typecheck": "npm --workspace shared run typecheck && npm --workspace apps/control-tower-web run typecheck && npm --workspace services/control-tower-api run typecheck"
+  },
+  "packageManager": "npm@11.4.2"
 }
-
