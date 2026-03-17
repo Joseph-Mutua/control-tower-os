@@ -3,12 +3,20 @@ import type { ShipmentDetail } from "@cxtms/shared";
 interface ShipmentBoardProps {
   shipments: ShipmentDetail[];
   selectedMode: "all" | ShipmentDetail["mode"];
+  selectedShipmentId: string;
   onModeChange: (mode: "all" | ShipmentDetail["mode"]) => void;
+  onSelectShipment: (shipmentId: string) => void;
 }
 
 const modes = ["all", "ocean", "air", "trucking", "parcel"] as const;
 
-export function ShipmentBoard({ shipments, selectedMode, onModeChange }: ShipmentBoardProps) {
+export function ShipmentBoard({
+  shipments,
+  selectedMode,
+  selectedShipmentId,
+  onModeChange,
+  onSelectShipment,
+}: ShipmentBoardProps) {
   return (
     <section className="panel board-panel span-2">
       <div className="panel-head board-head">
@@ -42,7 +50,12 @@ export function ShipmentBoard({ shipments, selectedMode, onModeChange }: Shipmen
           <span>Margin</span>
         </div>
         {shipments.map((shipment) => (
-          <article className="board-row" key={shipment.id}>
+          <button
+            className={selectedShipmentId === shipment.id ? "board-row selected" : "board-row"}
+            key={shipment.id}
+            type="button"
+            onClick={() => onSelectShipment(shipment.id)}
+          >
             <div>
               <strong>{shipment.reference}</strong>
               <small>{shipment.customer}</small>
@@ -69,7 +82,7 @@ export function ShipmentBoard({ shipments, selectedMode, onModeChange }: Shipmen
               <strong>${shipment.profitability.marginUsd.toLocaleString()}</strong>
               <small>{shipment.profitability.marginPct}% margin</small>
             </div>
-          </article>
+          </button>
         ))}
       </div>
     </section>

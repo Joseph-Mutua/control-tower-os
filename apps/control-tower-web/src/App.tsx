@@ -3,18 +3,25 @@ import { AppHeader } from "./components/AppHeader";
 import { ExceptionHeatmap } from "./components/ExceptionHeatmap";
 import { MetricCard } from "./components/MetricCard";
 import { Panel } from "./components/Panel";
+import { RecommendationPanel } from "./components/RecommendationPanel";
 import { ShipmentBoard } from "./components/ShipmentBoard";
+import { ShipmentTimeline } from "./components/ShipmentTimeline";
 import { SlaDashboard } from "./components/SlaDashboard";
+import { TrackingMap } from "./components/TrackingMap";
 import { controlTowerSeed } from "./data/controlTowerData";
 
 export function App() {
   const [activeView, setActiveView] = useState<"ops" | "partner">("ops");
   const [selectedMode, setSelectedMode] = useState<"all" | "ocean" | "air" | "trucking" | "parcel">("all");
+  const [selectedShipmentId, setSelectedShipmentId] = useState("shp-1001");
 
   const filteredShipments =
     selectedMode === "all"
       ? controlTowerSeed.shipments
       : controlTowerSeed.shipments.filter((shipment) => shipment.mode === selectedMode);
+
+  const selectedShipment =
+    filteredShipments.find((shipment) => shipment.id === selectedShipmentId) ?? filteredShipments[0] ?? controlTowerSeed.shipments[0];
 
   return (
     <main className="app-shell">
@@ -49,12 +56,19 @@ export function App() {
               <ShipmentBoard
                 shipments={filteredShipments}
                 selectedMode={selectedMode}
+                selectedShipmentId={selectedShipment.id}
                 onModeChange={setSelectedMode}
+                onSelectShipment={setSelectedShipmentId}
               />
               <ExceptionHeatmap buckets={controlTowerSeed.heatmap} />
             </section>
             <section className="ops-grid secondary">
+              <ShipmentTimeline shipment={selectedShipment} />
+              <TrackingMap shipment={selectedShipment} />
+            </section>
+            <section className="ops-grid secondary">
               <SlaDashboard widgets={controlTowerSeed.slaWidgets} />
+              <RecommendationPanel shipment={selectedShipment} />
               <Panel title="Action Themes" eyebrow="Recommended automation">
                 <ul className="signal-list compact">
                   <li>
