@@ -1,6 +1,6 @@
-# CXTMS Control Tower OS
 
-Predictive multi-modal visibility, exception orchestration, and partner self-service built as a demo product on top of CXTMS-style primitives.
+
+Live demo: https://control-tower-os-control-tower-web.vercel.app/
 
 ## What is in the demo
 
@@ -16,7 +16,7 @@ Predictive multi-modal visibility, exception orchestration, and partner self-ser
 - Shipment detail timeline, map-style tracking card, and recommended actions
 - Partner portal with role-aware self-service actions
 - Public tracking and issue-reporting workflow surfaces
-- Audited operations copilot for ìWhy is this shipment red?î style questions
+- Audited operations copilot for ‚ÄúWhy is this shipment red?‚Äù style questions
 
 ## Workspace
 
